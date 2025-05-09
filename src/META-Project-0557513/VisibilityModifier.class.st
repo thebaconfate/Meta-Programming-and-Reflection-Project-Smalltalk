@@ -4,18 +4,18 @@
 Class {
 	#name : 'VisibilityModifier',
 	#superclass : 'Object',
-	#category : 'Meta-Programming-and-Reflection',
-	#package : 'Meta-Programming-and-Reflection'
+	#category : 'META-Project-0557513',
+	#package : 'META-Project-0557513'
 }
 
 { #category : 'testing' }
-VisibilityModifier >> isProtectedMethod: method [
+VisibilityModifier >> isProtectedMethod: aMethod [
 	"Checks if a method has a protected pragma"
-	^ method sourceCode includes: '<protected>'.
+	^ aMethod sourceCode includes: '<protected>'.
 ]
 
 { #category : 'as yet unclassified' }
-VisibilityModifier >> mangleSelector: selector [
+VisibilityModifier >> mangleSelector: aSelector [
 	"Mangles a selector by prefixing it with '__'"
-	^ '__', selector name
+	^ '__', aSelector name
 ]
