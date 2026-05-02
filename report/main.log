@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2026.4.11)  2 MAY 2026 04:38
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2026.4.11)  2 MAY 2026 05:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -721,15 +721,15 @@ l.26 \newpage
               [1
 
 ] [2{/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}] 
-[3] (./main.aux)
+[3] [4] (./main.aux)
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 8D04380416DC8A69ECF59E8301C66778;1491.
  ) 
 Here is how much of TeX's memory you used:
- 20400 strings out of 477136
- 387783 string characters out of 5813392
- 1857388 words of memory out of 6000000
- 40325 multiletter control sequences out of 15000+600000
+ 20402 strings out of 477136
+ 387815 string characters out of 5813392
+ 1858388 words of memory out of 6000000
+ 40326 multiletter control sequences out of 15000+600000
  530140 words of font info for 44 fonts, out of 8000000 for 9000
  430 hyphenation exceptions out of 8191
  117i,7n,118p,495b,450s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -740,10 +740,10 @@ ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/public/tex-gyre/qagb.pfb></usr/share/texlive/texmf-dist/fon
 ts/type1/public/tex-gyre/qagr.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
 blic/cm-super/sfrm1000.pfb>
-Output written on main.pdf (4 pages, 158674 bytes).
+Output written on main.pdf (5 pages, 161969 bytes).
 PDF statistics:
- 131 PDF objects out of 1000 (max. 8388607)
- 107 compressed objects within 2 object streams
- 16 named destinations out of 1000 (max. 500000)
+ 136 PDF objects out of 1000 (max. 8388607)
+ 111 compressed objects within 2 object streams
+ 17 named destinations out of 1000 (max. 500000)
  106 words of extra memory for PDF output out of 10000 (max. 10000000)
 

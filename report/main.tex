@@ -38,7 +38,12 @@ Do note, that I haven't overriden Pharo's default behavior. For instance, if you
 would like to use the protected Visbility Modifier, you will have to add the
 plugins to the compiler prior to testing it out. To make testing easier, there
 are already tests present that should cover the minimum implementation
-requirements.
+requirements, and test that the different component (such as plugins) indeed
+work as described.\par
+You should be able to file in the .st files by dragging them in a Pharo 12.0
+image, selecting ``changelist browser", followed by ``select all" and then
+``file in" selected. Note that if a class normally used in Pharo was moved due to
+an addition or modification of a method, a warning may pop up.
 \section{Protected Visibility Modifier}
 \subsection{Requirement 1}
 The first requirement was to extend the compiler to support compilation of
@@ -74,9 +79,32 @@ mangled method. If it does, it will mangle it, otherwise it will leave it as is.
 \section{Object-Centric Debugging}
 \subsection{Requirement}
 \section{Multiple exception handlers}
+For this part of the project we are focussing on adding multiple exception
+handlers to BlockClosure. Following the code snippet in the assignment
+description, we add a method to BlockClosure to convert it to a MyBlockClosure.
 \subsection{Requirement 1}
+Once a BlockClosure is a MyBlockClosure, it unlocks methods relevant for this
+part of the project. It unlocks methods such as message:with:, which allows the
+user to register handlers for exception classes. It does this by keeping them as
+an association in a collection internally. Initially, it tried to find the
+closes matching recorded Exception class, and uses the associated handler.
 \subsection{Requirement 2}
+To call the handlers in order of specificity, we change the way that
+MyBlockClosure finds the handler. First we create a SortedCollection from the
+OrderedCollection with associations, sorted by hierarchy and filtered if the
+thrown Exception is a subclass of it as well. After this, it simply throws the
+first one (the one that is the most specific to the exception thrown).
 \subsection{Requirement 3}
+\label{subsection:requirement-3}
+To prevent breaking of on:do:, we essentially need to allow MyBlockClosure to
+allow an exception pass through if no handler can be found. This is done by
+simply allowing the exception to pass, if no handler can be found.
 \subsection{Requirement 4}
-
+Finally, to allow calling the next handler in MyBlockClosure, we modify
+MyBlockClosure, to keep track of the sorted collection of handlers as well as
+the handler currently being used. When value: is sent, it sets these values and
+when callNextHandler is sent, the index is incremented and the next handler in
+the collection gets
+used. If there is no handler left, it defaults to the behavior described in
+\ref{subsection:requirement-3}
 \end{document}
