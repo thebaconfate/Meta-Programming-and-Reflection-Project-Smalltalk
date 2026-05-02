@@ -1,6 +1,7 @@
-\documentclass{article}
+\documentclass[a4paper]{article}
 %\documentclass{report} % Can be article, report, book, anything you want!
 
+\usepackage{hyperref}
 \usepackage{vub} % this will automatically set to A4 paper. We're not in the US.
 % if, for some obscure reason, you need another format, please file an issue (see further).
 
@@ -9,14 +10,73 @@
 
 % Feel free to mix and match with other packages.
 
-\title{Your Title Here}
-\subtitle{An optional Subtitle Here}
+\setlength{\parskip}{1em}
+\title{Pharo project}
+\subtitle{Metaprogramming and Reflection}
 \faculty{Sciences and Bio-Engineering Sciences} % Note: without the word "Faculty"!
-\author{John Doe}
+\author{Gérard Lichtert\\
+        0557513\\
+    \href{mailto:gerard.lichtert@vub.be}{gerard.lichtert@vub.be}
+}
+\date{\today}
 
 \begin{document}
 \maketitle
+\tableofcontents
+\newpage
+\raggedright
 
-Your text goes here.
+\section{Overview}
+This project consists of three parts.
+\begin{itemize}
+	\item Protected Visibility Modifier
+	\item Object-Centric Debugging
+	\item Multiple exception handlers
+\end{itemize}
+Each part has it's own .st file located in the /src directory.
+Do note, that I haven't overriden Pharo's default behavior. For instance, if you
+would like to use the protected Visbility Modifier, you will have to add the
+plugins to the compiler prior to testing it out. To make testing easier, there
+are already tests present that should cover the minimum implementation
+requirements.
+\section{Protected Visibility Modifier}
+\subsection{Requirement 1}
+The first requirement was to extend the compiler to support compilation of
+$<$protected$>$ methods, using double registration of public methods and selector
+mangling of self sends.\par
+To achieve this, first we created a plugin for the compiler that mangles the
+selector of methods that have the $<$protected$>$ pragma.
+We also need double registration, to achieve this, I traced the method install to the point
+where methods are installed in a class. This was in ClassDescription, which is
+moved to the package since the method to install methods was modified.
+\par
+A method is installed with, among
+others, a selector and a compiledMethod, to which we can ask if it has a
+$<$protected$>$ pragma. If it does, we know it will already have a mangled
+selector. In this case it should be installed normally.
+However, if it does not have the $<$protected$>$ pragma, we know it is a public
+method and therefore has to be installed twice, once with the normal selector
+and once with the mangled selector. Since a selector is required to be passed
+along prior to installation, we install it once normally and install it once but
+with the mangled selector. Essentially we add another message send but with the
+mangled selector.
+\par
+To mangle self and super send, we create another plugin, just like we already
+did for the selector manging of protected methods. However, this time we will
+mangle the messages sent to self and super receivers.
+\subsection{Requirement 2}
+Another requirement is that the modifier should be backwards compatible, meaning
+that sometimes objects will already exist without the mangled selector, or
+taking the $<$protected$>$ modifier into account. To overcome this, we need to
+be extra careful when mangling self and super sends. More concretely, the plugin
+will now check if the class (or superclass, depending on the receiver) has the
+mangled method. If it does, it will mangle it, otherwise it will leave it as is.
+\section{Object-Centric Debugging}
+\subsection{Requirement}
+\section{Multiple exception handlers}
+\subsection{Requirement 1}
+\subsection{Requirement 2}
+\subsection{Requirement 3}
+\subsection{Requirement 4}
 
 \end{document}
