@@ -39,7 +39,13 @@ would like to use the protected Visbility Modifier, you will have to add the
 plugins to the compiler prior to testing it out. To make testing easier, there
 are already tests present that should cover the minimum implementation
 requirements, and test that the different component (such as plugins) indeed
-work as described.\par
+work as described.
+\par
+Some tests for the Object-Centric Debugging part of the assignment will always
+pass due to it requireing for the debugger to open. In this case you should
+manually check if the debugger indeed opens as intended or not when it
+shouldn't. There are comments to inform the user when it should or shouldn't.
+\par
 You should be able to file in the .st files by dragging them in a Pharo 12.0
 image, selecting ``changelist browser", followed by ``select all" and then
 ``file in" selected. Note that if a class normally used in Pharo was moved due to
@@ -78,6 +84,35 @@ will now check if the class (or superclass, depending on the receiver) has the
 mangled method. If it does, it will mangle it, otherwise it will leave it as is.
 \section{Object-Centric Debugging}
 \subsection{Requirement}
+For this part I was tasked with
+extending Pharo to support object-centric debugging based on the approach of Costiou et al.
+My implementation supports
+\begin{itemize}
+	\item breaking on every message send
+	\item breaking on every message send in the passed method
+	\item breaking on every message send in the passed method where the message
+	      meets a certain condition.
+	\item clearing all breakpoints
+\end{itemize}
+To implement this, I used anonymousSubclass to decouple the object from the
+class (so it only breaks on that specific object). Furthermore I used MetaLinks
+to create the breakpoints where needed. To give an example; since it's the most
+specific method. When onMessageSendIn: \# greet when: [ :send $\mid$ send selector =
+\#, ]
+is sent to the objectBreaker. The objectBreaker will compile the method from the
+original class in the anonymousSubclass, go through the ast of the method and if
+the sendNode meets the condition, it will install the metalink.
+\par
+For the other methods, such as \#onMessageSendIn: is sent to the breaker, it does
+the same except for checking the condition. \#OnMessageSend installs breakpoints
+in all methods, instead of the specified one.
+\par
+\#clear clears all breakpoints by going over the list of installed metalinks and
+uninstalling them. This list is kept track of when sending the messages above to
+the objectBreaker.
+\par
+Note that each of the methods mentioned above, besides \#clear checks if the
+object has super sends. If it does it will throw an exception.
 \section{Multiple exception handlers}
 For this part of the project we are focussing on adding multiple exception
 handlers to BlockClosure. Following the code snippet in the assignment
